@@ -19,19 +19,19 @@ void service(void *a){
 	cout<<max_disk_queue<<endl;
 }
 void open(void *a[]){
-	char *argv[] = (char *) a[];
+	char **argv = (char **) a;
 	max_disk_queue = atoi(argv[1]);
 	thread service ((thread_startfunc_t) service, (void *) argv[1]);
 	for (int i = 2; i < sizeof(argv)/sizeof(argv[1]); ++i)
 	{
-		char thread_name[] = {'t', (char) i};
-		thread thread_name ((thread_startfunc_t requester), (void *) argv[i]);
+		//char thread_name[] = {'t', (char) i};
+		thread thread_name ((thread_startfunc_t) requester, (void *) argv[i]);
 	}
 }
 
 
 int main(int argc, char *argv[])
 {
-	cpu::boot((thread_startfunc_t) open, (void*) argv[], 0);
+	cpu::boot((thread_startfunc_t) open, (void **) argv, 0);
 	return 0;
 }
