@@ -22,7 +22,9 @@ void open(void *a[]){
 	char **argv = (char **) a;
 	max_disk_queue = atoi(argv[1]);
 	thread service ((thread_startfunc_t) servicer, (void *) argv[1]);
-	cout<<sizeof(argv)/sizeof(argv[1])<<endl;
+	cout<<"sizeof(argv)/sizeof(argv[1])"<<sizeof(argv)/sizeof(argv[1])<<endl;
+	cout<<"sizeof(argv)/sizeof(char *)"<<sizeof(argv)/sizeof(char *)<<endl;
+	cout<<"sizeof(argv"<<sizeof(argv)<<"sizeof(argv[1]"<<sizeof(argv[1])<<"sizeof(char *)"<<sizeof(char *)<<endl;
 	for (int i = 2; i < sizeof(argv)/sizeof(argv[1]); ++i)
 	{
 		//char thread_name[] = {'t', (char) i};
