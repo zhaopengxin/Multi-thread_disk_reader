@@ -21,7 +21,7 @@ void servicer(void *a){
 void open(void *a[]){
 	char **argv = (char **) a;
 	max_disk_queue = atoi(argv[1]);
-	//thread servicer ((thread_startfunc_t) service, (void *) argv[1]);
+	thread servicer ((thread_startfunc_t) service, (void *) argv[1]);
 	for (int i = 2; i < sizeof(argv)/sizeof(argv[1]); ++i)
 	{
 		//char thread_name[] = {'t', (char) i};
