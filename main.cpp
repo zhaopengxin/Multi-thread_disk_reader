@@ -4,6 +4,7 @@
 
 using namespace std;
 int max_disk_queue;
+int num_of_argv;
 
 void requester(void *a){
 	char *disk_file_name = (char *) a;
@@ -22,10 +23,7 @@ void open(void *a[]){
 	char **argv = (char **) a;
 	max_disk_queue = atoi(argv[1]);
 	thread service ((thread_startfunc_t) servicer, (void *) argv[1]);
-	cout<<"sizeof(argv)/sizeof(argv[1])"<<sizeof(argv)/sizeof(argv[1])<<endl;
-	cout<<"sizeof(argv)/sizeof(char *)"<<sizeof(argv)/sizeof(char *)<<endl;
-	cout<<"sizeof(argv"<<sizeof(argv)<<"sizeof(argv[1]"<<sizeof(argv[1])<<"sizeof(char *)"<<sizeof(char *)<<endl;
-	for (int i = 2; i < sizeof(argv)/sizeof(argv[1]); ++i)
+	for (int i = 2; i < num_of_argv; i++)
 	{
 		//char thread_name[] = {'t', (char) i};
 		thread thread_name ((thread_startfunc_t) requester, (void *) argv[i]);
@@ -35,6 +33,7 @@ void open(void *a[]){
 
 int main(int argc, char *argv[])
 {
+	num_of_argv = argc;
 	cpu::boot((thread_startfunc_t) open, (void **) argv, 0);
 	return 0;
 }
