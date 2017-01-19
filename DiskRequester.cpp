@@ -6,13 +6,13 @@ class DiskRequester
 {
 public:
 
-	DiskRequester(string diskname, int worker_id){
+	DiskRequester(string diskname){
 		file_name = diskname;
-		id = worker_id;
+		//id = worker_id;
 	};
 	//~DiskRequester(){};
 	string file_name;
-	int id;
+	//int id;
 	cv cv1;
 	/* data */
 };
