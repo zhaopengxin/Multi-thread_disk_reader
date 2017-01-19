@@ -36,10 +36,10 @@ void requester(void *a){
 	// int worker_id_int = worker->worker_id;
 	char *disk_name = (char *) a;
 	string disk_name_string = disk_name;
-	write_lock.lock();
-	cout<<"I am worker No. "<<disk_name_string<<endl;
-	//cout<<"I am worker No. "<<disk_name_string<<endl;
-	write_lock.unlock();
+	// write_lock.lock();
+	// cout<<"I am worker No. "<<disk_name_string<<endl;
+	// //cout<<"I am worker No. "<<disk_name_string<<endl;
+	// write_lock.unlock();
 	//DiskRequester w(disk_name_string, worker_id_int);
 
 	DiskRequester w(disk_name_string);
@@ -86,11 +86,17 @@ void servicer(void *a){
 			break;
 		}
 		while(request_queue.size() < largest_possible_request){
+			write_lock.lock();
+			cout<<"servicer waiting"<<endl;
+			write_lock.unlock();
 			servicer_cv.wait(mutex1);
 		}
 		// if(request_queue.size() != largest_possible_request){
 		// 	continue;
 		// }
+		write_lock.lock();
+		cout<<"servicer wake up!!!!!"<<endl;
+		write_lock.unlock();
 		string file_to_delete;
 		int track_to_service;
 		cv *cv_to_service;
@@ -134,9 +140,9 @@ void open(void *a[]){
 		Worker *worker_pointer;
 		worker_pointer = &worker;
 		active_requester_list[argv[i]] = true;
-		write_lock.lock();
-		cout<<"creating worker "<<argv[i]<<endl;
-		write_lock.unlock();
+		// write_lock.lock();
+		// cout<<"creating worker "<<argv[i]<<endl;
+		// write_lock.unlock();
 		//thread thread_name ((thread_startfunc_t) requester, (void *) worker_pointer);
 		thread thread_name ((thread_startfunc_t) requester, (void *) argv[i]);
 	}
